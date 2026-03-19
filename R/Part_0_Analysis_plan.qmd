@@ -1,0 +1,83 @@
+---
+title: "Development and Internal Validation of a Model to Predict Malignancy of Adnexal Masses"
+subtitle: "Part 0: Analysis Plan"
+author: 
+  - "Group D"
+date: today
+execute: 
+  echo: true
+  warning: false
+format:
+  docx:
+    reference-doc: ../docs/manuscript/template.docx
+    link-citations: true
+editor: visual
+---
+
+```{r}
+#| label: directories
+#| include: false
+
+# Run only when using Positron (for compatibility with RStudio project)
+# setwd(paste0(getwd(),"/R"))
+
+# Create directories for sub-folders  
+inputfolder <- "../data/raw"
+psfolder <- "../data/processed"
+tempfolder <- "../data/temp"
+figfolder <- "../results/output_figures"
+tabfolder <- "../results/output_tables"
+
+dir.create(inputfolder, showWarnings = FALSE)
+dir.create(psfolder, showWarnings = FALSE)
+dir.create(tempfolder, showWarnings = FALSE)
+dir.create(figfolder, showWarnings = FALSE)
+dir.create(tabfolder, showWarnings = FALSE)
+```
+
+```{r}
+#| label: load packages
+#| include: false
+
+if (!require("pacman", quietly = TRUE)) {
+  install.packages("pacman")
+}
+
+pacman::p_load(
+  tidyverse,  
+  readxl,
+  pmsampsize,
+  table1,    
+  gt,         
+  report     
+)
+```
+
+
+
+{{< pagebreak >}}
+
+# References
+
+::: {#refs}
+:::
+
+
+{{< pagebreak >}}
+
+# Package References
+
+```{r}
+#| output: asis
+report::cite_packages(session)
+```
+
+```{r}
+#| include: false
+
+# Run this chunk if you wish to clear your environment and unload packages.
+
+pacman::p_unload(negate = TRUE)
+
+rm(list = ls())
+```
