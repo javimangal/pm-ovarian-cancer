@@ -47,13 +47,92 @@ pacman::p_load(
   tidyverse,  
   readxl,
   pmsampsize,
-  table1,    
+  table1,
+  flextable, 
+  officer, 
   gt,         
   report     
 )
 ```
 
+```{r}
+#| label: load data
+#| include: false
 
+data <- read.delim(
+  file.path(inputfolder,"ovarian.txt")
+  )
+
+# Assign variable characteristics (labels, type of variable, etc.)
+source("scripts/variable_names_raw.R")
+```
+
+# Characteristics of the study population
+
+```{r}
+#| label: malignancy risk
+
+risk_table <- data %>% group_by(mal) %>% summarize(n = n()) %>% 
+  mutate(risk = n/sum(n))
+
+risk_table %>% 
+  gt %>% 
+  fmt_percent(
+    columns = risk,
+    decimals = 1
+  ) %>%
+  cols_label(
+    risk = "Risk (%)"
+  ) 
+```
+
+```{r}
+#| label: table 1 
+
+table1 <- table1(
+  ~ Age + pershistovca + famhistovca + hormtherapy + pain + Ascites + 
+    CA125 + papflow + lesdmax + soldmaxorig + wallreg + Shadows + colscore + 
+    nrloculescat + papnr + oncocenter | mal,
+  data = data,
+  overall = c(left = "Overall"),
+  caption = "Table 1. Participant characteristics, grouped by adnexal malignancy status"
+)
+
+table1
+```
+
+```{r}
+#| label: save table 1
+
+# Save as word document:
+properties <- prop_section(
+  page_size = page_size(
+    orient = "landscape",
+    width = 8.3, height = 11.7
+  ),
+  type = "continuous",
+  page_margins = page_mar()
+)
+
+t1flex(table1) %>%
+  save_as_docx(
+    path = paste(tabfolder, "/Table1.docx", sep = ""),
+    pr_section = properties
+  )
+```
+
+
+# Sample Size Estimation
+
+```{r}
+pmsampsize(
+  type="b", 
+  parameters= 6,
+  shrinkage=0.9,
+  prevalence=risk_table$risk[2],
+  cstatistic=0.75
+  )
+```
 
 {{< pagebreak >}}
 
