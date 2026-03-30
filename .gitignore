@@ -1,7 +1,7 @@
 # Data
-data/temp
-data/processed
-data/raw
+#data/temp
+#data/processed
+data/raw/ovarian.txt
 
 # History files
 .Rhistory

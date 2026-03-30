@@ -12,9 +12,12 @@ University postgraduate assignment for the course **Clinical Prediction Models**
 6. Open one of the .qmd files. You can run every chunk of code sequentially to reproduce the analyses. Make sure to respect the order and if something fails, I recommend that you start running all chunks of code from the beginning. If you don't know how to run a chunk of code, you can [imitate what this person is doing](https://youtu.be/RPF6gGyeJmg?feature=shared&t=30). If you get a message saying "Access denied", change from *Visual* to *Source* mode which can be done with the Ctrl+Shift+F4 command.
 7. Please note that scripts are meant to be sourced into the flow of analyses in the main .qmd files. You may encounter problems if you attempt to run the scripts independently.
 
-If you are not able to follow the prior steps, you may also consider reviewing the [docx reports](docs/reports) documenting the analyses.
+If you are not able to follow the prior steps, you may also consider reviewing the [PDF reports](docs/reports) documenting the analyses.
 
--   [Part 0](R/Part_0_Analysis_plan.qmd). Sample size estimation and analysis strategy. [docx](docs/reports/Part_0_Analysis_plan.docx)
+-   [Part 0](R/Part_0_Analysis_plan.qmd). Sample size estimation and descriptive analysis. [PDF](docs/reports/Part_0_Analysis_plan.pdf)
+-   [Part 1](R/Part_1_Model_Development_and_Validation.qmd). Model development and internal validation, clinical utility analysis. [PDF](docs/reports/Part_1_Model_Development_and_Validation.pdf)
+
+Please note that the data folders are hidden to avoid sharing any sensitive data in this repository. Threfore, you will need to create the data folders according to the project directory structure described below, and include the data file in the ***data/raw*** directory. 
 
 ## Project Structure
 
@@ -49,4 +52,4 @@ The project structure distinguishes three kinds of folders:
 
 This project is licensed under the terms of the [MIT License](/LICENSE).
 
-This project structure template repository is adapted from the [Good Enough Project](https://github.com/bvreede/good-enough-project) Cookiecutter template by Barbara Vreede (2019).
+This project structure repository is adapted from the [Utrecht University simple R project template](https://github.com/UtrechtUniversity/simple-r-project), which builds upon the [Good Enough Project](https://github.com/bvreede/good-enough-project) Cookiecutter template by Barbara Vreede (2019).

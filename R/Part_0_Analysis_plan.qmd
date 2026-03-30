@@ -11,6 +11,8 @@ format:
   docx:
     reference-doc: ../docs/manuscript/template.docx
     link-citations: true
+  pdf:
+    toc: false
 editor: visual
 ---
 
@@ -45,7 +47,6 @@ if (!require("pacman", quietly = TRUE)) {
 
 pacman::p_load(
   tidyverse,  
-  readxl,
   pmsampsize,
   table1,
   flextable, 
@@ -86,8 +87,11 @@ risk_table %>%
   ) 
 ```
 
+{{< pagebreak >}}
+
 ```{r}
-#| label: table 1 
+#| label: tbl-table1
+#| tbl-cap: "Participant characteristics, grouped by adnexal malignancy status"
 
 table1 <- table1(
   ~ Age + pershistovca + famhistovca + hormtherapy + pain + Ascites + 
@@ -98,11 +102,12 @@ table1 <- table1(
   caption = "Table 1. Participant characteristics, grouped by adnexal malignancy status"
 )
 
-table1
+table1 %>% as.data.frame() %>% knitr::kable()
 ```
 
 ```{r}
 #| label: save table 1
+#| include: false
 
 # Save as word document:
 properties <- prop_section(
@@ -121,25 +126,22 @@ t1flex(table1) %>%
   )
 ```
 
+{{< pagebreak >}}
 
 # Sample Size Estimation
 
+The minimum sample size required to develop a prediction model was estimated considering six variables (of which four are binary variables requiring estimation of 1 parameter, and two are continuous and evaluated for non-linearity with restricted cubic splines with 3 knots [k - 1 = 2] resulting in 8 total parameters), a median c-statistic across prediction model studies of 0.75, a shrinkage of 0.9, and malignancy incidence of 32.7%.
+
 ```{r}
+#| label: sample size 
 pmsampsize(
   type="b", 
-  parameters= 6,
+  parameters= 8,
   shrinkage=0.9,
   prevalence=risk_table$risk[2],
   cstatistic=0.75
   )
 ```
-
-{{< pagebreak >}}
-
-# References
-
-::: {#refs}
-:::
 
 
 {{< pagebreak >}}
@@ -147,7 +149,18 @@ pmsampsize(
 # Package References
 
 ```{r}
+#| echo: false  
+
+# remove clutter
+session <- sessionInfo()
+session$BLAS <- NULL
+session$LAPACK <- NULL
+session$loadedOnly <- NULL
+```
+
+```{r}
 #| output: asis
+#| echo: false  
 report::cite_packages(session)
 ```
 
